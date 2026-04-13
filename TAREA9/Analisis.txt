@@ -1,0 +1,161 @@
+=========================================================
+  Tarea 9 analisis: 
+  Laboratorio Introducción a la Programación y Computación 1
+  Escuela de Ingeniería en Ciencias y Sistemas — USAC
+=========================================================
+
+─────────────────────────────────────────────────────────
+PREGUNTA 1 (5 pts)
+¿Cuál es la complejidad Big-O de insertarOrdenado?
+─────────────────────────────────────────────────────────
+
+La complejidad de insertarOrdenado es O(n), donde n es el número de
+nodos actualmente en la lista.
+
+JUSTIFICACIÓN:
+El algoritmo funciona de la siguiente manera:
+  1. Se crea el nuevo nodo                      O(1)
+  2. Se verifica si la lista está vacía         O(1)
+  3. Se compara la nota con el head             O(1)
+  4. Se compara la nota con el tail             O(1)   posible sólo
+                                                          en lista doble
+  5. En el caso general, se recorre la lista
+     hasta encontrar la posición correcta       O(n)  domina todo
+
+El paso que domina es el recorrido del paso 5. En el MEJOR caso
+(insertar al inicio o al final) el costo es O(1), pero el análisis
+Big-O usa el PEOR caso: cuando el nuevo nodo debe insertarse en la
+posición del último nodo, obligando a recorrer toda la lista.
+
+Por lo tanto: T(n) = O(1) + O(1) + O(1) + O(1) + O(n) = O(n).
+
+Nota: no existe ningún algoritmo de inserción ordenada en lista enlazada
+que sea mejor que O(n) en el peor caso, porque no podemos hacer
+búsqueda binaria — los nodos NO tienen índice de acceso directo.
+
+
+─────────────────────────────────────────────────────────
+PREGUNTA 2 (5 pts)
+Array vs. Lista Enlazada para cada operación
+─────────────────────────────────────────────────────────
+
+OPERACIÓN A: Buscar al estudiante con carnet 202300001
+  Estructura más eficiente: ARRAY (si está ordenado), EMPATE (si no)
+  ───────────────────────────────────────────────────────────────────
+  • Si el array está ORDENADO por carnet, se puede usar Búsqueda
+    Binaria: O(log n). Esto es significativamente más rápido que
+    recorrer nodo por nodo.
+  • Si el array NO está ordenado, la búsqueda lineal es O(n) igual
+    que en una Lista Enlazada, por lo que no hay ventaja real.
+  • La Lista Enlazada SIEMPRE requiere O(n) porque no tiene acceso
+    aleatorio; no puede "saltar" a la mitad de la estructura.
+  Conclusión: Array ordenado gana con O(log n) vs O(n).
+
+OPERACIÓN B: Agregar 500 estudiantes nuevos AL INICIO del registro
+  Estructura más eficiente: LISTA ENLAZADA
+  ───────────────────────────────────────────────────────────────────
+  • En un ARRAY, insertar al inicio obliga a desplazar todos los
+    elementos existentes una posición hacia la derecha  O(n) por
+    cada inserción  O(n²) para 500 inserciones.
+  • En una LISTA ENLAZADA, insertar al inicio es simplemente redirigir
+    el puntero head  O(1) por inserción  O(n) total para 500.
+  • Además, si el array no tiene espacio, debe redimensionarse
+    (copiar todos los elementos a un nuevo bloque de memoria).
+  Conclusión: Lista Enlazada gana con O(1) por inserción vs O(n).
+
+OPERACIÓN C: Acceder directamente al 3er estudiante de la lista
+  Estructura más eficiente: ARRAY
+  ───────────────────────────────────────────────────────────────────
+  • En un ARRAY, acceder al tercer elemento es simplemente
+    array[2] → O(1). Los arrays son estructuras de acceso
+    ALEATORIO porque los elementos están contiguos en memoria y la
+    dirección de cualquier elemento se calcula directamente con:
+      dirección = dirección_base + (índice × tamaño_elemento)
+  • En una LISTA ENLAZADA, no hay índice. Para llegar al 3er nodo
+    hay que partir del head y seguir dos veces el puntero
+    "siguiente"  O(k) donde k es la posición, en este caso O(3)
+    que sigue siendo O(n) en el caso general.
+  Conclusión: Array gana con O(1) vs O(n).
+
+RESUMEN COMPARATIVO:
+  ┌────────────────────────────────────┬──────────┬──────────────────┐
+  │ Operación                          │ Ganador  │ Complejidad      │
+  ├────────────────────────────────────┼──────────┼──────────────────┤
+  │ Buscar por carnet (ordenado)       │ Array    │ O(log n) vs O(n) │
+  │ Agregar 500 al inicio              │ Lista    │ O(1) vs O(n)     │
+  │ Acceso directo al 3er elemento     │ Array    │ O(1) vs O(n)     │
+  └────────────────────────────────────┴──────────┴──────────────────┘
+
+
+─────────────────────────────────────────────────────────
+PREGUNTA 3 (10 pts)
+Diagrama del Heap — estado de la memoria después de:
+
+  ListaEstudiantes lista = new ListaEstudiantes();
+  lista.agregarInicio("202300001", "Ana",   85.0);
+  lista.agregarInicio("202300002", "Luis",  90.0);
+  lista.agregarFinal ("202300003", "María", 78.0);
+  lista.eliminarPorCarnet("202300001");
+─────────────────────────────────────────────────────────
+
+El diagrama se encuentra en el archivo separado "diagrama_heap.png"
+(o ver la representación textual más abajo como referencia).
+
+ESTADO FINAL DEL HEAP (representación textual):
+
+  Stack                    Heap
+  ─────                    ─────────────────────────────────
+  lista ──────────────────▶ [ListaEstudiantes]
+    head ─────────────────────▶ [NodoEstudiante @0xB2]
+                                  carnet    = "202300002"
+                                  nombre    = "Luis"
+                                  nota      = 90.0
+                                  siguiente ──────────────▶ [NodoEstudiante @0xC4]
+                                                              carnet    = "202300003"
+                                                              nombre    = "María"
+                                                              nota      = 78.0
+                                                              siguiente = null
+
+  NODO HUÉRFANO (ya no accesible — el GC lo recolecta):
+    [NodoEstudiante @0xA1] ← fue eliminado por eliminarPorCarnet("202300001")
+      carnet    = "202300001"
+      nombre    = "Ana"
+      nota      = 85.0
+      siguiente = null  (antes apuntaba a null)
+
+TRAZA PASO A PASO:
+  Paso 1 — new ListaEstudiantes()
+    head = null
+
+  Paso 2 — agregarInicio("202300001","Ana",85.0)
+    Se crea NodoEstudiante @0xA1 {Ana, 85.0, sig=null}
+    nuevo.siguiente = null (head era null)
+    head = @0xA1
+    ► head → [Ana | 85.0 | null]
+
+  Paso 3 — agregarInicio("202300002","Luis",90.0)
+    Se crea NodoEstudiante @0xB2 {Luis, 90.0, sig=null}
+    nuevo.siguiente = @0xA1  (apunta al Ana)
+    head = @0xB2
+    ► head → [Luis | 90.0 | @0xA1] → [Ana | 85.0 | null]
+
+  Paso 4 — agregarFinal("202300003","María",78.0)
+    Se crea NodoEstudiante @0xC4 {María, 78.0, sig=null}
+    Recorre hasta @0xA1 (tiene siguiente=null, es el último)
+    @0xA1.siguiente = @0xC4
+    ► head → [Luis | 90.0 | @0xA1] → [Ana | 85.0 | @0xC4] → [María | 78.0 | null]
+
+  Paso 5 — eliminarPorCarnet("202300001")
+    head.carnet es "202300002" ≠ "202300001", seguimos buscando
+    head.siguiente.carnet es "202300001" ← ¡encontrado!
+    Saltamos el nodo Ana: head.siguiente = @0xC4
+    El nodo @0xA1 queda huérfano (sin referencias que apunten a él)
+    ► head → [Luis | 90.0 | @0xC4] → [María | 78.0 | null]
+
+ESTADO FINAL:
+  head apunta a Luis (202300002, nota 90.0)
+  Luis.siguiente apunta a María (202300003, nota 78.0)
+  María.siguiente = null  (fin de la lista)
+  El nodo Ana ya no existe en la lista.
+
+=========================================================
