@@ -20,3 +20,7 @@
 -![Diagrama del Heap](https://raw.githubusercontent.com/Diego122-pc/IPC1_EJERCICIOS_202503934/master/TAREA9/Anexos/WhatsApp%20Image%202026-04-13%20at%203.56.57%20PM.jpeg)
 
 ---
+## Tarea 10 
+-  [Codigo](https://github.com/Diego122-pc/IPC1_EJERCICIOS_202503934/tree/master/Tarea10)
+
+---
