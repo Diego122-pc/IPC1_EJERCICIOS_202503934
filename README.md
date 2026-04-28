@@ -22,5 +22,5 @@
 ---
 ## Tarea 10 
 -  [Codigo](https://github.com/Diego122-pc/IPC1_EJERCICIOS_202503934/tree/master/Tarea10)
-
+-![Captura](https://github.com/Diego122-pc/IPC1_EJERCICIOS_202503934/blob/master/Tarea10/Anexos/Captura%20de%20pantalla%202026-04-20%20095005.png)
 ---
