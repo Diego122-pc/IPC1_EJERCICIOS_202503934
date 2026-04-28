@@ -28,11 +28,14 @@
 
 ## Tarea 11
     Ejercicio 1
+[codigo_Ejercicio1](https://github.com/Diego122-pc/IPC1_EJERCICIOS_202503934/blob/master/Tarea%2011/Ejercicio1.java)
+
 ![Funcionamiento](https://github.com/Diego122-pc/IPC1_EJERCICIOS_202503934/blob/master/Tarea%2011/Anexos/Captura%20de%20pantalla%202026-04-27%20200406.png)
 
 
 
     Ejercicio 2
+[Codigo_Ejercicio2](https://github.com/Diego122-pc/IPC1_EJERCICIOS_202503934/blob/master/Tarea%2011/Ejercicio2.java)
 
 ![Funcionamiento](https://github.com/Diego122-pc/IPC1_EJERCICIOS_202503934/blob/master/Tarea%2011/Anexos/Captura%20de%20pantalla%202026-04-27%20200457.png)
 
